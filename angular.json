@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "health-tech-component:build"
+            "browserTarget": "hmpkv:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "health-tech-component:build:production"
+              "browserTarget": "hmpkv:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "health-tech-component:build"
+            "browserTarget": "hmpkv:build"
           }
         },
         "test": {
@@ -115,11 +115,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "health-tech-component:serve"
+            "devServerTarget": "hmpkv:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "health-tech-component:serve:production"
+              "devServerTarget": "hmpkv:serve:production"
             }
           }
         },
