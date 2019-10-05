@@ -1,13 +1,15 @@
 {
   "name": "health-tech-component",
   "version": "0.0.0",
+  "homepage":"https://senapatisantosh.github.io/HMPKV",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open --port 4301",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build --prod && gh-pages -d dist/hmpkv"
   },
   "dependencies": {
     "@agm/core": "^1.0.0-beta.7",
@@ -27,6 +29,7 @@
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
     "d3": "^5.7.0",
+    "gh-pages": "^2.1.1",
     "jquery": "^3.4.1",
     "moment": "^2.23.0",
     "ng2-charts": "^1.6.0",
