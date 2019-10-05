@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 declare var ol: any;
 declare let L;
 
+
+
 @Component({
   selector: 'app-htc-analytics',
   templateUrl: './htc-analytics.component.html',
@@ -95,6 +97,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   flag: boolean = true;
   setNewPos: any;
   marker: any;
+  circle: any;
   map: any;
   myIcon: any;
   i: number = 1000;
@@ -111,30 +114,41 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
     let dpsLength = 0;
     this.map = L.map('map').setView([this.latitude, this.longitude], 5);
     this.myIcon = L.icon({
-      iconUrl: '../../assets/images/marker-icon.png',
+      iconUrl: 'assets/images/marker-icon.png',
       iconSize: [38, 56],
       iconAnchor: [22, 55],
       popupAnchor: [-3, -76],
-      shadowUrl: '../../assets/images/marker-shadow.png',
+      shadowUrl: 'assets/images/marker-shadow.png',
       shadowSize: [68, 56],
       shadowAnchor: [22, 55]
     });
     this.marker = L.marker([this.latitude, this.longitude], { icon: this.myIcon });
+    this.circle = L.circle([this.latitude, this.longitude], {
+      color: "red",
+      fillColor: "#f03",
+      fillOpacity: 0.5,
+      radius: 255000.0
+    })
     this.marker.addTo(this.map);
+    this.circle.addTo(this.map);
     const attribution = '';
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tiles = L.tileLayer(tileUrl, { attribution });
     tiles.addTo(this.map);
-
+    const apiURL = 'https://api.wheretheiss.at/v1/satellites/25544';
     Observable
       .interval(1000)
-      .flatMap(() => this.appSettingsService.getLiveLocation())
+      .flatMap(() => fetch(apiURL))
       .subscribe(data => {
-        this.marker.setLatLng([data.iss_position.latitude, data.iss_position.longitude], { icon: this.myIcon });
-        if (this.flag) {
-          this.map.setView([data.iss_position.latitude, data.iss_position.longitude], 5);
-          this.flag = false;
-        }
+        let a = data.json();
+        a.then((d) => {
+          this.marker.setLatLng([d.latitude, d.longitude], { icon: this.myIcon });
+          this.circle.setLatLng([d.latitude, d.longitude]);
+          if (this.flag) {
+            this.map.setView([d.latitude, d.longitude], 5);
+            this.flag = false;
+          }
+        });
       });
 
 

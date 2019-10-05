@@ -4,12 +4,12 @@
   "homepage":"https://senapatisantosh.github.io/HMPKV",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open --port 4301",
+    "start": "ng serve  --open --port 4309",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod && gh-pages -d dist/hmpkv"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@agm/core": "^1.0.0-beta.7",

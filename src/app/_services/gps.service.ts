@@ -12,11 +12,11 @@ export class AppSettingsService {
     constructor(private http: HttpClient) {
     }
 
-    public getLiveLocation(): Observable<any> {
-        return this.http.jsonp("http://api.open-notify.org/iss-now.json", "callback");
-    }
+    // public getLiveLocation(): Observable<any> {
+    //     return this.http.post("https://api.wheretheiss.at/v1/satellites/25544",null);
+    // }
 
     public getMomentumData(): Observable<any> {
-        return this.http.get("../../assets/json/Test.json");
+        return this.http.get("assets/json/Test.json");
     }
 }
