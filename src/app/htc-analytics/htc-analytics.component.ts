@@ -4,6 +4,7 @@ import { AppSettingsService } from '../_services/gps.service';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/interval';
 import { Observable } from 'rxjs';
+import * as $ from 'jquery';
 declare var ol: any;
 declare let L;
 
@@ -21,6 +22,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   maximize: boolean = true;
   chartModal: Chart;
   tempChartId: string;
+  labelString: boolean = false;
   tempflag: boolean = false;
   charts = [
     {
@@ -138,17 +140,14 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
     const apiURL = 'https://api.wheretheiss.at/v1/satellites/25544';
     Observable
       .interval(1000)
-      .flatMap(() => fetch(apiURL))
+      .flatMap(() => this.appSettingsService.getLiveLocation())
       .subscribe(data => {
-        let a = data.json();
-        a.then((d) => {
-          this.marker.setLatLng([d.latitude, d.longitude], { icon: this.myIcon });
-          this.circle.setLatLng([d.latitude, d.longitude]);
-          if (this.flag) {
-            this.map.setView([d.latitude, d.longitude], 5);
-            this.flag = false;
-          }
-        });
+        this.marker.setLatLng([data.iss_position.latitude, data.iss_position.longitude], { icon: this.myIcon });
+        this.circle.setLatLng([data.iss_position.latitude, data.iss_position.longitude]);
+        if (this.flag) {
+          this.map.setView([data.iss_position.latitude, data.iss_position.longitude], 5);
+          this.flag = false;
+        }
       });
 
 
@@ -186,6 +185,16 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
             yAxes: [{
               ticks: {
                 beginAtZero: false,
+              },
+              scaleLabel: {
+                display: this.labelString,
+                labelString: this.charts[index]["ChartHeader"]
+              }
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: this.labelString,
+                labelString: 'Time Elapsed in Sec.'
               }
             }]
           }
@@ -206,6 +215,15 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
                 this.charts[index]["y"][index2][tempString].shift();
               }
             }
+            else if(this.charts[index]["x"].length > this.xaxisMinimalPoints){
+              for (let index2 = 0; index2 <= (this.charts[index]["x"].length-this.xaxisMinimalPoints)+1; index2++) {
+                this.charts[index]["x"].shift();
+                for (let index3 = 0; index3 < this.charts[index]["ChartCollection"].length; index3++) {
+                  let tempString: string = "y" + (index3 + 1);
+                  this.charts[index]["y"][index3][tempString].shift();
+                }
+              }
+            }
             this.charts[index]["x"].push(this.appSettingsService.currentTimer / 10);
             for (let index3 = 0; index3 < this.charts[index]["ChartCollection"].length; index3++) {
               let tempString: string = "y" + (index3 + 1);
@@ -221,13 +239,30 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  switchdisplay = function () {
-    this.sidebar = !this.sidebar;
+  switchdisplay = function (event) {
+    if(event.path[0].className == "fixed-plugin"){
+      this.sidebar = !this.sidebar;
+    }
   }
 
-  MaximizeGraph = function (event) {
-    console.log(event.path[2]);
+  MaximizeGraph = function (event,index) {
+    this.tempflag = !this.tempflag;
+    this.labelString = !this.labelString;
+    let tObj = this.charts.filter(x=>x.ChartID == index)[0];
+    this.charts[this.charts.indexOf(tObj)]["ChartObj"].chart.options.scales.xAxes[0].scaleLabel.display = this.labelString;
+    this.charts[this.charts.indexOf(tObj)]["ChartObj"].chart.options.scales.yAxes[0].scaleLabel.display = this.labelString;
+    if (this.tempflag) {
+      $("#" + event.path[2].id).addClass("col-lg-8");
+      $("#" + event.path[2].id).removeClass("col-lg-3");
+      $("#" + event.path[2].id).addClass("maximize-graph");
+      this.xaxisMinimalPoints = 10;
+    }
+    else {
+      $("#" + event.path[2].id).removeClass("col-lg-8");
+      $("#" + event.path[2].id).addClass("col-lg-3");
+      $("#" + event.path[2].id).removeClass("maximize-graph");
+      this.xaxisMinimalPoints = 5;
+    }
+    this.charts[this.charts.indexOf(tObj)]["ChartObj"].chart.update();
   }
-
-
 }
