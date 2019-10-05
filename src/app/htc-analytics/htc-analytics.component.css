@@ -1,0 +1,194 @@
+.htc-container {
+    padding-top: 10rem;
+}
+
+.buttom-margin-alignment {
+    margin-bottom: 4rem;
+}
+
+#map {
+    top: .5em;
+}
+
+.align-center {
+    text-align: center !important;
+}
+
+.inclusive-icon>i {
+    color: #23669a;
+}
+
+.inclusive-icon {
+    margin-top: -1rem;
+}
+
+.inclusive-icon::after, .inclusive-icon::before {
+    display: inline-block;
+    margin-top: -4px;
+    vertical-align: middle;
+    content: "";
+    background-color: #23669a;
+    width: 48px;
+    height: 1px;
+}
+
+.align-center>h3 {
+    font-family: exo;
+    color: #23669a;
+    font-weight: 600;
+}
+
+.analytics-card {
+    background-color: #fff;
+    border: none;
+    border-radius: .625rem;
+    box-shadow: 0 0.2rem 2rem rgba(114, 166, 226, 0.64), 0px 0rem 0rem rgba(114, 166, 226, 0.64), 0px 0rem 0rem rgba(114, 166, 226, 0.64), 1px 0rem 0.1875rem rgba(114, 166, 226, 0.64);
+    padding: 1em;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.for-plot {
+    min-height: 500px !important;
+}
+
+#img {
+    background: url('../../assets/images/Slider/5.jpg') no-repeat center;
+    animation-name: imagechanger;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes imagechanger {
+    16% {
+        background: url('../../assets/images/Slider/1.jpg') no-repeat center;
+    }
+    32% {
+        background: url('../../assets/images/Slider/2.jpg') no-repeat center;
+    }
+    48% {
+        background: url('../../assets/images/Slider/3.jpg') no-repeat center;
+    }
+    64% {
+        background: url('../../assets/images/Slider/4.jpg') no-repeat center;
+    }
+    64% {
+        background: url('../../assets/images/Slider/5.jpg') no-repeat center;
+    }
+    64% {
+        background: url('../../assets/images/Slider/6.jpg') no-repeat center;
+    }
+}
+
+.align-center {
+    text-align: center !important;
+}
+
+.align-center>h4 {
+    font-family: exo;
+    color: #23669a;
+    font-weight: 600;
+}
+
+.inclusive-icon>i {
+    color: #23669a;
+}
+
+.inclusive-icon::after, .inclusive-icon::before {
+    display: inline-block;
+    margin-top: -4px;
+    vertical-align: middle;
+    content: "";
+    background-color: #23669a;
+    width: 48px;
+    height: 1px;
+}
+
+.margin-alignment {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.fixed-plugin {
+    min-width: 50px;
+    min-height: 50px;
+    position: fixed;
+    top: 6.5em;
+    right: 0;
+    width: 64px;
+    background: rgba(0, 0, 0, .3);
+    z-index: 1031;
+    border-radius: 8px 0 0 8px;
+    text-align: center;
+    background: url('../../assets/images/gear.gif') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.fixed-plugin .dropdown-menu:before {
+    border-bottom: 16px solid transparent;
+    border-left: 16px solid rgba(77, 102, 154, 0.52);
+    border-top: 16px solid transparent;
+    right: -16px;
+}
+
+.fixed-plugin .dropdown-menu:after, .fixed-plugin .dropdown-menu:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 2rem;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 7rem;
+    z-index: 1000;
+    top: 0% !important;
+    left: auto !important;
+    float: left;
+    display: block;
+    min-width: 40rem;
+    min-height: 50rem;
+    padding: 2rem;
+    font-size: 14px;
+    text-align: center;
+    list-style: none;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    background-color: #fff;
+    border: none;
+    border-radius: .625rem;
+    box-shadow: 0 0.2rem 2rem rgba(114, 166, 226, 0.64), 0px 0rem 0rem rgba(114, 166, 226, 0.64), 0px 0rem 0rem rgba(114, 166, 226, 0.64), 1px 0rem 0.1875rem rgba(114, 166, 226, 0.64);
+    font-family: exo;
+    color: #23669a;
+    font-weight: 600;
+}
+
+.max-icon{
+    position: absolute;
+    float: right;
+    z-index: 2;
+    right: 3rem;
+    top: 3rem;
+    cursor: pointer;
+    color: #23669a;
+}
+
+.modal-margin{
+    margin: 30px 0px 0px 0px;
+}
+
+.maximize-graph{
+    position: absolute;
+    top: 0;
+    z-index: 100000;
+}

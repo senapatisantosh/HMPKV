@@ -1,0 +1,179 @@
+ul.nav>li>a, .navbar-brand {
+  font-family: exo;
+  font-size: 16px;
+  font-weight: bold;
+  color: #23669a;
+}
+
+.icon-bar {
+  color: #23669a;
+}
+
+#example-navbar-collapse {
+  padding-right: 5rem;
+}
+
+.navbar {
+  height: 80px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  z-index: 100;
+  transition: background-color 1s ease 0s;
+}
+
+.navbar-default .navbar-brand {
+  margin-top: 10px;
+  color: white;
+}
+
+.navbar-default .navbar-brand:hover {
+  color: #23669a;
+  border: 1px solid #23669a;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+  margin: 10px 5px 5px 5px;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:active, .navbar-default .navbar-nav>li>a:focus {
+  color: #23669a;
+  border: 1px solid #23669a;
+}
+
+.navbar-default .navbar-nav>li>a:visited {
+  color: #23669a;
+  text-decoration: none;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  background-color: transparent;
+  color: #23669a;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #23669a;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  color: #23669a;
+  background-color: #23669a;
+}
+
+.navbar-default .navbar-collapse.collapse.in ul {
+  background-color: #ffffff;
+}
+
+/* Solid class attached on scroll past first section */
+
+.navbar.solid {
+  background-color: #ffffff;
+  transition: background-color 1s ease 0s;
+  -webkit-box-shadow: 0 8px 20px 0 rgba(218, 224, 235, .6);
+  box-shadow: 0 8px 20px 0 rgba(218, 224, 235, .6);
+}
+
+.navbar.solid .navbar-brand {
+  color: #23669a;
+  transition: color 1s ease 0s;
+}
+
+.navbar.solid .navbar-nav>li>a {
+  color: #23669a;
+  transition: color 1s ease 0s;
+}
+
+.navbar-brand:hover {
+  cursor: pointer;
+  color: #23669a;
+  border: none !important;
+}
+
+.navbar-header {
+  float: left;
+  padding: 30px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+}
+
+.navbar-brand {
+  float: none;
+  font-size: 18px !important;
+}
+
+.dashboard-badges-container {
+  position: absolute;
+  top: 500px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: linear-gradient(to top, #c3bbff26 0, transparent 18%);
+  z-index: -1;
+  margin-bottom: -12rem;
+}
+
+.component-footer {
+  background-color: #fff;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.component-footer>div>div>ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.component-footer>div>div>ul>li>a {
+  color: #919fb1;
+  font-family: exo;
+}
+
+strong.title {
+  font-family: exo;
+  color: #23669a;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 5rem;
+}
+
+.copy {
+  font-size: 1.125rem;
+  color: #919fb1;
+  display: list-item;
+  font-family: exo;
+}
+
+a.social-icon-marker {
+  color: #fff;
+  text-decoration: none;
+  font-size: 3rem;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 3rem;
+  font-size: 4rem;
+}
+
+.htc-logo {
+  max-width: 15rem;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+hr {
+  border: none;
+  height: -2px;
+  width: 90%;
+  height: 1rem;
+  margin-top: 0;
+  border-bottom: 1px solid transparent;
+  box-shadow: inset 1px -20px 20px -20px #b3b5ff70;
+  margin: 20px auto 0px;
+}

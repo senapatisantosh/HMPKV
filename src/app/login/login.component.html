@@ -1,0 +1,40 @@
+<div class="auth-body">
+  <div class="card">
+    <div class="form-content">
+      <!-- <img id="logo" height="100" width="300" src="../assets/images/HTC1.png" /> -->
+      <h3 class="auth-component-header">Human Mobilization Position & Kinamatic Visualization<span id="blinking">_</span></h3>
+      <p class="sub-title">Welcome! Log in with your email.</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group input-comp">
+          <label class="label-header" for="email">Email address:</label>
+          <input id="email" formControlName="username" class="form-control" name="email" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+        </div>
+        <div class="form-group input-comp">
+            <label class="label-header" for="password">Password:</label>
+            <input id="password" formControlName="password" type="password" class="form-control" name="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+        <div class="form-group input-comp">
+            <label class="checkbox-inline label-header" for="remember-me-button"><input name="remember-me-button" id="remember-me-button" type="checkbox" value="">Remember me</label>
+            <a id="link-label-header" class="label-header" href="#">Forgot password?</a>
+        </div>
+        <button [disabled]="loading" type="submit" class="form-control btn" id="login-button">LOG IN</button>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+      </form>
+      <p id="sub-title-social-login">Or login with.</p>
+      <div id="social-icon-container">
+        <a (click)="signInWithGoogle()" class="fa fa-google-plus social-icon"></a>
+        <a (click)="signInWithFacebook()" class="fa fa-facebook social-icon"></a>
+        <a href="#" class="fa fa-twitter social-icon"></a>
+        <a href="#" class="fa fa-github social-icon"></a>
+      </div> 
+      <p id="sub-title-social-login">Don't have an account? <a id="register-link" class="label-header" href="#">Register</a></p>
+    </div>
+  </div>
+</div>
+

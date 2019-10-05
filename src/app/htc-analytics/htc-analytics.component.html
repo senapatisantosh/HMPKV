@@ -1,0 +1,52 @@
+<div class="htc-container">
+	<div class="container-fluid p-100 buttom-margin-alignment">
+		<div class="row">
+			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="align-center">
+							<h4>Live Location</h4>
+						</div>
+					</div>
+				</div>
+				<div id="map" class="map analytics-card for-plot"></div>
+			</div>
+			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="align-center">
+							<h4>Live Streaming</h4>
+						</div>
+					</div>
+				</div>
+				<div class="analytics-card for-plot" id="img">
+
+				</div>
+			</div>
+		</div>
+		<div class="row margin-alignment">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="align-center">
+					<h4>Live Analytics</h4>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div *ngFor="let chart of charts"
+				[ngClass]="{'col-lg-2':maximize,'col-md-6':maximize,'col-sm-12':maximize,'col-xs-12':maximize}">
+				<div class="analytics-card">
+					<canvas id="{{chart.ChartID}}"></canvas>
+					<i class="fa fa-arrows-alt max-icon" (click)="MaximizeGraph($event)"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="fixed-plugin" (click)="switchdisplay()">
+	<ul class="dropdown-menu" *ngIf="sidebar">
+		<li class="header-title">Centralized Config.</li>
+	</ul>
+</div>
