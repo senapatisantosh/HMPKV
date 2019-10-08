@@ -284,10 +284,10 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     let dataPoints = [];
     let dpsLength = 0;
-    this.map = L.map('map').setView([this.latitude, this.longitude], 5);
+    this.map = L.map('map').setView([this.latitude, this.longitude], 7);
     this.myIcon = L.icon({
-      iconUrl: 'assets/images/marker-icon.png',
-      iconSize: [38, 56],
+      iconUrl: 'assets/images/cars.svg',
+      iconSize: [58, 76],
       iconAnchor: [22, 55],
       popupAnchor: [-3, -76],
       shadowUrl: 'assets/images/marker-shadow.png',
@@ -295,14 +295,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       shadowAnchor: [22, 55]
     });
     this.marker = L.marker([this.latitude, this.longitude], { icon: this.myIcon });
-    this.circle = L.circle([this.latitude, this.longitude], {
-      color: "red",
-      fillColor: "#f03",
-      fillOpacity: 0.5,
-      radius: 255000.0
-    })
     this.marker.addTo(this.map);
-    this.circle.addTo(this.map);
     const attribution = '';
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tiles = L.tileLayer(tileUrl, { attribution });
@@ -313,9 +306,8 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       .flatMap(() => this.appSettingsService.getLiveLocation())
       .subscribe(data => {
         this.marker.setLatLng([data.iss_position.latitude, data.iss_position.longitude], { icon: this.myIcon });
-        this.circle.setLatLng([data.iss_position.latitude, data.iss_position.longitude]);
         if (this.flag) {
-          this.map.setView([data.iss_position.latitude, data.iss_position.longitude], 5);
+          this.map.setView([data.iss_position.latitude, data.iss_position.longitude], 7);
           this.flag = false;
         }
       });
