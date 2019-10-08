@@ -5,6 +5,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/interval';
 import { Observable } from 'rxjs';
 import * as $ from 'jquery';
+import { AngularFireDatabase } from '@angular/fire/database';
 declare var ol: any;
 declare let L;
 
@@ -24,12 +25,13 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   tempChartId: string;
   labelString: boolean = false;
   tempflag: boolean = false;
+  parameters = [];
   charts = [
     {
       "ChartID": "lineChart1",
       "ChartObj": Chart,
       "ChartHeader": "Acceleration X, Y & Z",
-      "ChartCollection": ["Acceleration Xv (m/s²)", "Acceleration Yv (m/s²)", "Acceleration Zv (m/s²)"],
+      "ChartCollection": ["Acceleration Xv", "Acceleration Yv", "Acceleration Zv"],
       "x": [],
       "y": [
         { "y1": [] },
@@ -42,7 +44,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       "ChartID": "lineChart2",
       "ChartObj": Chart,
       "ChartHeader": "Angular rate X, Y & Z",
-      "ChartCollection": ["Angular rate Xv (deg/s)", "Angular rate Yv (deg/s)", "Angular rate Zv (deg/s)"],
+      "ChartCollection": ["Angular rate Xv", "Angular rate Yv", "Angular rate Zv"],
       "x": [],
       "y": [
         { "y1": [] },
@@ -55,7 +57,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       "ChartID": "lineChart3",
       "ChartObj": Chart,
       "ChartHeader": "Velocity forward, lateral & down",
-      "ChartCollection": ["Velocity forward (m/s)", "Velocity lateral (m/s)", "Velocity down (m/s)"],
+      "ChartCollection": ["Velocity forward", "Velocity lateral", "Velocity down"],
       "x": [],
       "y": [
         { "y1": [] },
@@ -68,7 +70,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       "ChartID": "lineChart4",
       "ChartObj": Chart,
       "ChartHeader": "Pitch & Roll",
-      "ChartCollection": ["Pitch (deg)", "Roll (deg)"],
+      "ChartCollection": ["Pitch", "Roll"],
       "x": [],
       "y": [
         { "y1": [] },
@@ -80,7 +82,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       "ChartID": "lineChart5",
       "ChartObj": Chart,
       "ChartHeader": "Heading",
-      "ChartCollection": ["Heading (deg)"],
+      "ChartCollection": ["Heading"],
       "x": [],
       "y": [
         { "y1": [] }
@@ -91,7 +93,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       "ChartID": "lineChart6",
       "ChartObj": Chart,
       "ChartHeader": "Distance horizontal",
-      "ChartCollection": ["Distance horizontal (m)"],
+      "ChartCollection": ["Distance horizontal"],
       "x": [],
       "y": [
         { "y1": [] }
@@ -276,15 +278,18 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   colors: string[] = ["blue", "red", "black"];
   chartCategory: string[] = ["line"];
   xaxisMinimalPoints: number = 5;
+  mapViewNumber: Number = 13;
+  imgid: string = "";
+  fullurl : string = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/img0249.jpeg?alt=media&token=48b037b7-ef37-470e-9ecc-cf44024f2e6a";
 
-  constructor(private appSettingsService: AppSettingsService) {
+  constructor(private appSettingsService: AppSettingsService, public db: AngularFireDatabase) {
 
   }
 
   ngOnInit() {
     let dataPoints = [];
     let dpsLength = 0;
-    this.map = L.map('map').setView([this.latitude, this.longitude], 7);
+    this.map = L.map('map').setView([this.latitude, this.longitude], this.mapViewNumber);
     this.myIcon = L.icon({
       iconUrl: 'assets/images/cars.svg',
       iconSize: [58, 76],
@@ -301,20 +306,6 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
     const tiles = L.tileLayer(tileUrl, { attribution });
     tiles.addTo(this.map);
     const apiURL = 'https://api.wheretheiss.at/v1/satellites/25544';
-    Observable
-      .interval(1000)
-      .flatMap(() => this.appSettingsService.getLiveLocation())
-      .subscribe(data => {
-        this.marker.setLatLng([data.iss_position.latitude, data.iss_position.longitude], { icon: this.myIcon });
-        if (this.flag) {
-          this.map.setView([data.iss_position.latitude, data.iss_position.longitude], 7);
-          this.flag = false;
-        }
-      });
-
-
-
-
   }
 
   ngAfterViewInit(): void {
@@ -367,14 +358,25 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
     }
     Observable
       .interval(1000)
-      .flatMap(() => this.appSettingsService.getMomentumData())
+      .flatMap(() => this.db.list("/livePosition").valueChanges())
       .subscribe(data => {
         if (this.threadLock) {
-          if (this.appSettingsService.currentTimer <= (data[data.length - 1].Time * 10)) {
+          if (this.appSettingsService.currentTimer <= (data[data.length - 1]["Time"] * 10)) {
             let factor = 1;
             let unitHeader = "";
-            let tempdata = data.filter(x => x.Time * 10 === this.appSettingsService.currentTimer)[0];
+            this.parameters = [];
+            let tempdata = data.filter(x => x["Time"] * 10 === this.appSettingsService.currentTimer)[0];
+            // this.imgid = tempdata["Video"];
+            // this.fullurl = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/" + this.imgid + ".jpeg?alt=media&token=65f811f4-221c-4d2c-b70c-b1cb6f726a43";
+            this.marker.setLatLng([tempdata["Latitude"], tempdata["Longitude"]], { icon: this.myIcon });
+
+            if (this.flag) {
+              this.map.setView([tempdata["Latitude"], tempdata["Longitude"]], this.mapViewNumber);
+              this.flag = false;
+            }
             for (let index = 0; index < this.charts.length; index++) {
+              let unitOB = this.units.filter(x => this.charts[index]["ChartHeader"].includes(x.type))[0].units.filter(y => y.status == true)[0];
+              unitHeader = unitOB.name;
               if (this.charts[index]["x"].length == this.xaxisMinimalPoints) {
                 this.charts[index]["x"].shift();
                 for (let index2 = 0; index2 < this.charts[index]["ChartCollection"].length; index2++) {
@@ -391,23 +393,34 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
                   }
                 }
               }
-              let unitOB = this.units.filter(x => this.charts[index]["ChartHeader"].includes(x.type))[0].units.filter(y => y.status == true)[0];
-              unitHeader = unitOB.name;
+
               factor = unitOB.factor;
               this.charts[index]["x"].push(this.appSettingsService.currentTimer / 10);
               for (let index3 = 0; index3 < this.charts[index]["ChartCollection"].length; index3++) {
                 let tempString: string = "y" + (index3 + 1);
-                this.charts[index]["y"][index3][tempString].push(tempdata[this.charts[index]["ChartCollection"][index3]] * factor);
+                let tempNo = tempdata[this.charts[index]["ChartCollection"][index3]] * factor;
+                this.charts[index]["y"][index3][tempString].push(tempNo);
+                let tempP = {
+                  "Parameter":"",
+                  "Value":"",
+                  "Unit":""
+                };
+                tempP.Parameter = this.charts[index]["ChartCollection"][index3];
+                tempP.Unit = unitOB.name;
+                tempP.Value = tempNo.toFixed(4);
+                this.parameters.push(tempP);
               }
               let newHeader = this.charts[index]["ChartHeader"] + " ( " + unitHeader + " ) ";
               this.charts[index]["ChartObj"].chart.options.title.text = newHeader;
               this.charts[index]["ChartObj"].chart.update();
             }
-            this.appSettingsService.currentTimer += 1
+            this.appSettingsService.currentTimer += 1;
+            
           }
           else {
-            this.appSettingsService.currentTimer = 4
+            this.appSettingsService.currentTimer = 4;
           }
+          
         }
       });
   }
@@ -455,7 +468,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       }, 500);
 
     }
-    else if(unit.type == "Graph Points") {
+    else if (unit.type == "Graph Points") {
       for (let index = 0; index < this.charts.length; index++) {
         this.charts[index]["overlay"] = true;
       }

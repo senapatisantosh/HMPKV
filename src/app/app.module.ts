@@ -15,6 +15,10 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { SimpleSidenavModule } from 'simple-sidenav';
 import { HtcAnalyticsComponent } from './htc-analytics/htc-analytics.component';
 import { AppSettingsService } from './_services/gps.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import {environment} from '../environments/environment';
 
 
 
@@ -53,6 +57,9 @@ export function provideConfig() {
     NgxGaugeModule,
     SimpleSidenavModule,
     ToastrModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

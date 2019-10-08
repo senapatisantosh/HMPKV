@@ -20,8 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="analytics-card for-plot" id="img">
-
+                <div class="analytics-card for-plot" id="img" [ngStyle]="{'background': 'url('+fullurl+') no-repeat center' }">
                 </div>
             </div>
         </div>
@@ -39,45 +38,15 @@
                     <div class="col-lg-12">
                         <div class="analytics-card" id="units">
                             <ul class="parameters-menu">
-                                <li class="header-title-cp">HMPKV Parameters</li>
+                                <li class="header-title-cp">HMPKV PARAMETERS</li>
                                 <ul class="list-group-cp">
-                                    <li class="list-group-item">Time
-                                        <label class="container-Cp float-r">Sec.</label>
+                                    <li class="list-group-item Sp">PARAMETERS
+                                        <label class="container-Cp float-r Sp">UNITS</label>
+                                        <label class="container-Cp float-r Sp">VALUES</label>
                                     </li>
-                                    <li class="list-group-item">Angular Rate
-                                        <label class="container-Cp float-r">deg/s</label>
-                                        <label class="container-Cp float-r">rad/s</label>
-                                    </li>
-                                    <li class="list-group-item">Acceleration
-                                        <label class="container-Cp float-r">m/s<sup>2</sup></label>
-                                        <label class="container-Cp float-r">g</label>
-                                    </li>
-                                    <li class="list-group-item">Heading
-                                        <label class="container-Cp float-r">deg</label>
-                                        <label class="container-Cp float-r">rad</label>
-                                    </li>
-                                    <li class="list-group-item">Pitch & Roll
-                                        <label class="container-Cp float-r">deg</label>
-                                        <label class="container-Cp float-r">rad</label>
-                                    </li>
-                                    <li class="list-group-item">Longitude & Latitude
-                                        <label class="container-Cp float-r">deg</label>
-                                        <label class="container-Cp float-r">rad</label>
-                                    </li>
-                                    <li class="list-group-item">Altitude
-                                        <label class="container-Cp float-r">m</label>
-                                        <label class="container-Cp float-r">Inch</label>
-                                        <label class="container-Cp float-r">Ft</label>
-                                    </li>
-                                    <li class="list-group-item">Distance
-                                        <label class="container-Cp float-r">m</label>
-                                        <label class="container-Cp float-r">Km</label>
-                                        <label class="container-Cp float-r">Mile</label>
-                                    </li>
-                                    <li class="list-group-item">Velocity
-                                        <label class="container-Cp float-r">m/s</label>
-                                        <label class="container-Cp float-r">Km/hr</label>
-                                        <label class="container-Cp float-r">Mile/hr</label>
+                                    <li class="list-group-item" *ngFor="let p of parameters">{{p.Parameter}}
+                                        <label class="container-Cp float-r">{{p.Unit}}</label>
+                                        <label class="container-Cp float-r">{{p.Value}}</label>
                                     </li>
                                 </ul>
                             </ul>
