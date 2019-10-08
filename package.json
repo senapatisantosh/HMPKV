@@ -1,7 +1,7 @@
 {
   "name": "health-tech-component",
   "version": "0.0.0",
-  "homepage":"https://senapatisantosh.github.io/HMPKV",
+  "homepage": "https://senapatisantosh.github.io/HMPKV",
   "scripts": {
     "ng": "ng",
     "start": "ng serve  --open --port 4309",

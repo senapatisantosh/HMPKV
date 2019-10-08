@@ -9,11 +9,12 @@ import { interval } from 'rxjs/observable/interval';
 export class AppSettingsService {
 
     currentTimer: number = 4;
+    
     constructor(private http: HttpClient) {
     }
 
     public getLiveLocation(): Observable<any> {
-        return this.http.jsonp("http://api.open-notify.org/iss-now.json","callback");
+        return this.http.jsonp("http://api.open-notify.org/iss-now.json", "callback");
     }
 
     public getMomentumData(): Observable<any> {

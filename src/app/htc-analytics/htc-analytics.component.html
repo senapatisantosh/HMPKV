@@ -1,154 +1,126 @@
 <div class="htc-container">
-	<div class="container-fluid p-100 buttom-margin-alignment">
-		<div class="row">
-			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="align-center">
-							<h4>Live Location</h4>
-						</div>
-					</div>
-				</div>
-				<div id="map" class="map analytics-card for-plot"></div>
-			</div>
-			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <div class="container-fluid p-100 buttom-margin-alignment">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="align-center">
+                            <h4>Live Location</h4>
+                        </div>
+                    </div>
+                </div>
+                <div id="map" class="map analytics-card for-plot"></div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="align-center">
-							<h4>Live Streaming</h4>
-						</div>
-					</div>
-				</div>
-				<div class="analytics-card for-plot" id="img">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="align-center">
+                            <h4>Live Streaming</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="analytics-card for-plot" id="img">
 
-				</div>
-			</div>
-		</div>
-		<div class="row margin-alignment">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="align-center">
-					<h4>Live Analytics</h4>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div id="div{{chart.ChartID}}" *ngFor="let chart of charts"
-				[ngClass]="{'col-lg-3':maximize,'col-md-6':maximize,'col-sm-12':maximize,'col-xs-12':maximize}">
-				<div class="analytics-card">
-					<canvas id="{{chart.ChartID}}"></canvas>
-					<i class="fa fa-arrows-alt max-icon" (click)="MaximizeGraph($event,chart.ChartID)"></i>
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-alignment">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="align-center">
+                    <h4>Live Analytics</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="analytics-card" id="units">
+                            <ul class="parameters-menu">
+                                <li class="header-title-cp">HMPKV Parameters</li>
+                                <ul class="list-group-cp">
+                                    <li class="list-group-item">Time
+                                        <label class="container-Cp float-r">Sec.</label>
+                                    </li>
+                                    <li class="list-group-item">Angular Rate
+                                        <label class="container-Cp float-r">deg/s</label>
+                                        <label class="container-Cp float-r">rad/s</label>
+                                    </li>
+                                    <li class="list-group-item">Acceleration
+                                        <label class="container-Cp float-r">m/s<sup>2</sup></label>
+                                        <label class="container-Cp float-r">g</label>
+                                    </li>
+                                    <li class="list-group-item">Heading
+                                        <label class="container-Cp float-r">deg</label>
+                                        <label class="container-Cp float-r">rad</label>
+                                    </li>
+                                    <li class="list-group-item">Pitch & Roll
+                                        <label class="container-Cp float-r">deg</label>
+                                        <label class="container-Cp float-r">rad</label>
+                                    </li>
+                                    <li class="list-group-item">Longitude & Latitude
+                                        <label class="container-Cp float-r">deg</label>
+                                        <label class="container-Cp float-r">rad</label>
+                                    </li>
+                                    <li class="list-group-item">Altitude
+                                        <label class="container-Cp float-r">m</label>
+                                        <label class="container-Cp float-r">Inch</label>
+                                        <label class="container-Cp float-r">Ft</label>
+                                    </li>
+                                    <li class="list-group-item">Distance
+                                        <label class="container-Cp float-r">m</label>
+                                        <label class="container-Cp float-r">Km</label>
+                                        <label class="container-Cp float-r">Mile</label>
+                                    </li>
+                                    <li class="list-group-item">Velocity
+                                        <label class="container-Cp float-r">m/s</label>
+                                        <label class="container-Cp float-r">Km/hr</label>
+                                        <label class="container-Cp float-r">Mile/hr</label>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div id="div{{chart.ChartID}}" *ngFor="let chart of charts" [ngClass]="{'col-lg-4':maximize,'col-md-12':maximize,'col-sm-12':maximize,'col-xs-12':maximize}">
+                        <div class="analytics-card">
+                            <canvas id="{{chart.ChartID}}"></canvas>
+                            <i class="fa fa-2x fa-arrows-alt max-icon" (click)="MaximizeGraph($event,chart.ChartID)"></i>
+                            <div id="overlay{{chart.ChartID}}" *ngIf="chart.overlay" class="overlayLoading">
+                                <div class="loader">
+                                    <img id="imgloader" src="assets/images/loading1.gif" alt="" srcset="">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="fixed-plugin" (click)="switchdisplay($event)">
-	<ul class="dropdown-menu dropdown-menu-mod" *ngIf="sidebar">
-		<li class="header-title">Centralized Config.</li>
-		<ul class="list-group">
-			<li class="list-group-item">Time
-				<label class="container-C float-r">Sec.
-					<input type="radio" checked="checked" name="time">
+    <ul class="dropdown-menu dropdown-menu-mod" *ngIf="sidebar">
+        <li class="header-title">Centralized Config.</li>
+        <ul class="list-group">
+
+            <li class="list-group-item" *ngFor="let unit of units">{{unit.type}}
+                <label class="container-C float-r" *ngFor="let u of unit.units">{{u.name}}
+					<input type="radio" [checked]="u.status" (change)="configChange(unit,u)" name="{{unit.type}}">
 					<span class="checkmark"></span>
 				</label>
-			</li>
-			<li class="list-group-item">Angular Rate
-				<label class="container-C float-r">deg/s
-					<input type="radio" checked="checked" name="ar">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">rad/s
-					<input type="radio" name="ar">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Acceleration
-				<label class="container-C float-r">m/s<sup>2</sup>
-					<input type="radio" checked="checked" name="acc">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">g
-					<input type="radio" name="acc">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Pitch & Roll
-				<label class="container-C float-r">rad
-					<input type="radio" checked="checked" name="pr">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">deg
-					<input type="radio" name="pr">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Longitude & Latitude
-				<label class="container-C float-r">rad
-					<input type="radio" checked="checked" name="lola">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">deg
-					<input type="radio" name="lola">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Altitude
-				<label class="container-C float-r">m.
-					<input type="radio" checked="checked" name="al">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">Inch.
-					<input type="radio" name="al">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">Ft.
-					<input type="radio" name="al">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Distance
-				<label class="container-C float-r">m.
-					<input type="radio" checked="checked" name="dis">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">Km.
-					<input type="radio" name="dis">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">Mile.
-					<input type="radio" name="dis">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Velocity
-				<label class="container-C float-r">m/s
-					<input type="radio" checked="checked" name="velo">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">Km/s
-					<input type="radio" name="velo">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">Mile/s
-					<input type="radio" name="velo">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-			<li class="list-group-item">Graph Points
-				<label class="container-C float-r">5
-					<input type="radio" checked="checked" name="gp">
-					<span class="checkmark"></span>
-				</label>
-				<label class="container-C float-r">10
-					<input type="radio" name="gp">
-					<span class="checkmark"></span>
-				</label>
-			</li>
-		</ul>
-	</ul>
+            </li>
+
+
+        </ul>
+    </ul>
 
 </div>
 

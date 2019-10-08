@@ -22,7 +22,8 @@
     margin-top: -1rem;
 }
 
-.inclusive-icon::after, .inclusive-icon::before {
+.inclusive-icon::after,
+.inclusive-icon::before {
     display: inline-block;
     margin-top: -4px;
     vertical-align: middle;
@@ -96,7 +97,8 @@
     color: #23669a;
 }
 
-.inclusive-icon::after, .inclusive-icon::before {
+.inclusive-icon::after,
+.inclusive-icon::before {
     display: inline-block;
     margin-top: -4px;
     vertical-align: middle;
@@ -119,7 +121,7 @@
     right: 0;
     width: 64px;
     background: rgba(0, 0, 0, .3);
-    z-index: 1031;
+    z-index: 1031000;
     border-radius: 8px 0 0 8px;
     text-align: center;
     background: url('../../assets/images/gear.gif') no-repeat center;
@@ -134,7 +136,8 @@
     right: -16px;
 }
 
-.fixed-plugin .dropdown-menu-mod:after, .fixed-plugin .dropdown-menu-mod:before {
+.fixed-plugin .dropdown-menu-mod:after,
+.fixed-plugin .dropdown-menu-mod:before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -147,7 +150,7 @@
 .dropdown-menu-mod {
     position: absolute;
     right: 7rem;
-    z-index: 1000;
+    z-index: 1000000;
     top: 0% !important;
     left: auto !important;
     float: left;
@@ -199,28 +202,29 @@
     -ms-transform: translate(-50%, -50%);
 }
 
-.backdrop{
+.backdrop {
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     background: black;
     opacity: 0.8;
     z-index: 99999;
     top: 0;
 }
 
-.list-group-item{
+.list-group-item {
     text-align: left;
-    border:none;
+    border: none;
 }
-.list-group{
+
+.list-group {
     margin-top: 3em;
 }
 
-
-.float-r{
+.float-r {
     float: right !important;
 }
+
 .container-C {
     max-width: 50px;
     min-width: 50px;
@@ -234,17 +238,21 @@
     -ms-user-select: none;
     user-select: none;
     margin-right: 15px;
-  }
-  
-  /* Hide the browser's default radio button */
-  .container-C input {
+}
+
+
+/* Hide the browser's default radio button */
+
+.container-C input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
-  }
-  
-  /* Create a custom radio button */
-  .checkmark {
+}
+
+
+/* Create a custom radio button */
+
+.checkmark {
     position: absolute;
     top: 0;
     left: 0;
@@ -252,36 +260,120 @@
     width: 20px;
     background-color: #eee;
     border-radius: 50%;
-  }
-  
-  /* On mouse-over, add a grey background color */
-  .container-C:hover input ~ .checkmark {
+}
+
+
+/* On mouse-over, add a grey background color */
+
+.container-C:hover input~.checkmark {
     background-color: #ccc;
-  }
-  
-  /* When the radio button is checked, add a blue background */
-  .container-C input:checked ~ .checkmark {
+}
+
+
+/* When the radio button is checked, add a blue background */
+
+.container-C input:checked~.checkmark {
     background-color: #2196F3;
-  }
-  
-  /* Create the indicator (the dot/circle - hidden when not checked) */
-  .checkmark:after {
+}
+
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+
+.checkmark:after {
     content: "";
     position: absolute;
     display: none;
-  }
-  
-  /* Show the indicator (dot/circle) when checked */
-  .container-C input:checked ~ .checkmark:after {
+}
+
+
+/* Show the indicator (dot/circle) when checked */
+
+.container-C input:checked~.checkmark:after {
     display: block;
-  }
-  
-  /* Style the indicator (dot/circle) */
-  .container-C .checkmark:after {
-       top: 6px;
-      left: 6px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: white;
-  }
+}
+
+
+/* Style the indicator (dot/circle) */
+
+.container-C .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.container-Cp {
+    max-width: 50px;
+    min-width: 50px;
+    display: inline;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 15px;
+    font-size: 18px;
+    color: #147b86;
+}
+
+#units {
+    min-height: 45.5em;
+}
+
+.parameters-menu {
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 20px;
+    text-align: left;
+    color: #23669a;
+    list-style: none;
+    font-family: exo;
+    font-weight: bold;
+}
+
+.list-group-cp {
+    margin-top: 2em;
+    /* line-height: 2em; */
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+.header-title-cp {
+    text-align: center;
+    font-size: 25px;
+}
+
+.overlayLoading {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 4px;
+    left: 0;
+    padding: 2em;
+}
+
+.loader {
+    background: #6670b5;
+    opacity: 0.4;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+#imgloader {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
