@@ -357,7 +357,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       });
     }
     Observable
-      .interval(1000)
+      .interval(2000)
       .flatMap(() => this.db.list("/livePosition").valueChanges())
       .subscribe(data => {
         if (this.threadLock) {
@@ -366,8 +366,8 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
             let unitHeader = "";
             this.parameters = [];
             let tempdata = data.filter(x => x["Time"] * 10 === this.appSettingsService.currentTimer)[0];
-            // this.imgid = tempdata["Video"];
-            // this.fullurl = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/" + this.imgid + ".jpeg?alt=media&token=65f811f4-221c-4d2c-b70c-b1cb6f726a43";
+            this.imgid = tempdata["Video"];
+            this.fullurl = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/" + this.imgid + ".jpeg?alt=media&token=65f811f4-221c-4d2c-b70c-b1cb6f726a43";
             this.marker.setLatLng([tempdata["Latitude"], tempdata["Longitude"]], { icon: this.myIcon });
 
             if (this.flag) {

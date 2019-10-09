@@ -33,7 +33,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="analytics-card" id="units">
@@ -54,12 +54,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div id="div{{chart.ChartID}}" *ngFor="let chart of charts" [ngClass]="{'col-lg-4':maximize,'col-md-12':maximize,'col-sm-12':maximize,'col-xs-12':maximize}">
                         <div class="analytics-card">
                             <canvas id="{{chart.ChartID}}"></canvas>
-                            <i class="fa fa-2x fa-arrows-alt max-icon" (click)="MaximizeGraph($event,chart.ChartID)"></i>
+                            <i class="fa fa-arrows-alt max-icon" (click)="MaximizeGraph($event,chart.ChartID)"></i>
                             <div id="overlay{{chart.ChartID}}" *ngIf="chart.overlay" class="overlayLoading">
                                 <div class="loader">
                                     <img id="imgloader" src="assets/images/loading1.gif" alt="" srcset="">

@@ -279,20 +279,22 @@
     min-width: 50px;
     display: inline;
     position: relative;
-    padding-left: 30px;
+    padding-left: 0px;
     cursor: pointer;
     font-size: 12px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-right: 75px;
+    margin-right: 50px;
     font-size: 15px;
     color: #147b86;
 }
 
 #units {
-    min-height: 45.5em;
+    min-height: 29.5em;
+    overflow-y: scroll;
+    max-height: 29.5em;
 }
 
 .parameters-menu {
@@ -349,20 +351,6 @@
 }
 
 .Sp {
-    font-size: 24px !important;
+    font-size: 15px !important;
     color: #b79973;
-}
-
-#units::-webkit-scrollbar-track {
-    border: 1px solid black;
-    background-color: #F5F5F5;
-}
-
-#units::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5;
-}
-
-#units::-webkit-scrollbar-thumb {
-    background-color: #000000;
 }
