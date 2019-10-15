@@ -5,7 +5,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve  --open --port 4309",
-        "build": "ng build --prod --base-href /HMPKV/",
+        "build": "ng build --prod --base-href /",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
