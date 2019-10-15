@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Chart } from 'chart.js';
 import { AppSettingsService } from '../_services/gps.service';
 import 'rxjs/add/operator/mergeMap';
@@ -17,7 +17,8 @@ declare let L;
   styleUrls: ['./htc-analytics.component.css']
 })
 
-export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
+export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewChecked {
+
 
   @ViewChild('myModal') myModal;
   maximize: boolean = true;
@@ -26,6 +27,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   labelString: boolean = false;
   tempflag: boolean = false;
   parameters = [];
+  parameterHeight = "500px";
   charts = [
     {
       "ChartID": "lineChart1",
@@ -282,7 +284,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
   imgid: string = "";
   fullurl : string = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/img0249.jpeg?alt=media&token=48b037b7-ef37-470e-9ecc-cf44024f2e6a";
 
-  constructor(private appSettingsService: AppSettingsService, public db: AngularFireDatabase) {
+  constructor(private appSettingsService: AppSettingsService, public db: AngularFireDatabase, private cdRef:ChangeDetectorRef) {
 
   }
 
@@ -357,7 +359,7 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
       });
     }
     Observable
-      .interval(2000)
+      .interval(1000)
       .flatMap(() => this.db.list("/livePosition").valueChanges())
       .subscribe(data => {
         if (this.threadLock) {
@@ -423,6 +425,10 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit {
           
         }
       });
+  }
+  ngAfterViewChecked(): void {
+    this.parameterHeight = $("#graphs").height() + "px";
+    this.cdRef.detectChanges();
   }
 
   switchdisplay = function (event) {

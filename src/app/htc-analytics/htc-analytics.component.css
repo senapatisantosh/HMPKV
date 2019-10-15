@@ -50,6 +50,7 @@
 }
 
 .for-plot {
+    height: 500px;
     min-height: 500px !important;
 }
 
@@ -292,9 +293,8 @@
 }
 
 #units {
-    min-height: 29.5em;
     overflow-y: scroll;
-    max-height: 29.5em;
+    height: 97%;
 }
 
 .parameters-menu {
@@ -322,6 +322,9 @@
 .header-title-cp {
     text-align: center;
     font-size: 28px;
+    font-family: exo;
+    font-weight: 700;
+    color: #23669a;
 }
 
 .overlayLoading {
@@ -353,4 +356,24 @@
 .Sp {
     font-size: 15px !important;
     color: #b79973;
+}
+
+#stream-image {
+    height: 100%;
+    width: 100%;
+}
+
+td {
+    text-align: left;
+}
+
+thead {
+    font-family: exo;
+    font-size: 16px;
+    color: #c3b072;
+}
+
+tbody {
+    font-family: exo;
+    color: #23669a;
 }

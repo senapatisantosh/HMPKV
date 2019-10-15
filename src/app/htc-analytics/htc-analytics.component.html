@@ -20,7 +20,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="analytics-card for-plot" id="img" [ngStyle]="{'background': 'url('+fullurl+') no-repeat center' }">
+                <div (load)="hjk()" class="analytics-card for-plot" id="img">
+                    <img [src]="fullurl" id="stream-image" [ngStyle] = "{'transition': 'background 1s linear 1s'}"/>
                 </div>
             </div>
         </div>
@@ -32,29 +33,33 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                <div class="row">
-                    <div class="col-lg-12">
+        <div class="row" [ngStyle]="{'height': parameterHeight}">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="height: 100%;">
+                <div class="row" style="height: 100%;">
+                    <div class="col-lg-12" style="height: 100%;">
                         <div class="analytics-card" id="units">
-                            <ul class="parameters-menu">
-                                <li class="header-title-cp">HMPKV PARAMETERS</li>
-                                <ul class="list-group-cp">
-                                    <li class="list-group-item Sp">PARAMETERS
-                                        <label class="container-Cp float-r Sp">UNITS</label>
-                                        <label class="container-Cp float-r Sp">VALUES</label>
-                                    </li>
-                                    <li class="list-group-item" *ngFor="let p of parameters">{{p.Parameter}}
-                                        <label class="container-Cp float-r">{{p.Unit}}</label>
-                                        <label class="container-Cp float-r">{{p.Value}}</label>
-                                    </li>
-                                </ul>
-                            </ul>
+                              <table class="table">
+                                <caption class="header-title-cp">HMPKV PARAMETERS</caption>
+                                <thead>
+                                <tr>
+                                    <th>PARAMETERS</th>
+                                    <th>UNITS</th>
+                                    <th>VALUES</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let p of parameters">
+                                    <td>{{p.Parameter}}</td>
+                                    <td>{{p.Unit}}</td>
+                                    <td>{{p.Value}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" id="graphs">
                 <div class="row">
                     <div id="div{{chart.ChartID}}" *ngFor="let chart of charts" [ngClass]="{'col-lg-4':maximize,'col-md-12':maximize,'col-sm-12':maximize,'col-xs-12':maximize}">
                         <div class="analytics-card">
