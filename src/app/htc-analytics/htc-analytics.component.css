@@ -377,3 +377,7 @@ tbody {
     font-family: exo;
     color: #23669a;
 }
+
+.height-100 {
+    height: 100%;
+}
