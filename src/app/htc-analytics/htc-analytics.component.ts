@@ -19,7 +19,8 @@ declare let L;
 
 export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-
+  mapInterval = 100; // in milliseconds
+  graphandImageInterval = 1000; // in milliseconds
   @ViewChild('myModal') myModal;
   maximize: boolean = true;
   chartModal: Chart;
@@ -27,6 +28,8 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
   labelString: boolean = false;
   tempflag: boolean = false;
   parameters = [];
+
+  pointList = [];
   parameterHeight = "500px";
   charts = [
     {
@@ -275,16 +278,17 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
   marker: any;
   circle: any;
   map: any;
+  firstpolyline: any;
   myIcon: any;
   i: number = 1000;
   colors: string[] = ["blue", "red", "black"];
   chartCategory: string[] = ["line"];
   xaxisMinimalPoints: number = 5;
-  mapViewNumber: Number = 13;
+  mapViewNumber: Number = 20;
   imgid: string = "";
-  fullurl : string = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/img0249.jpeg?alt=media&token=48b037b7-ef37-470e-9ecc-cf44024f2e6a";
+  fullurl: string = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/img0249.jpeg?alt=media&token=48b037b7-ef37-470e-9ecc-cf44024f2e6a";
 
-  constructor(private appSettingsService: AppSettingsService, public db: AngularFireDatabase, private cdRef:ChangeDetectorRef) {
+  constructor(private appSettingsService: AppSettingsService, public db: AngularFireDatabase, private cdRef: ChangeDetectorRef) {
 
   }
 
@@ -292,6 +296,13 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
     let dataPoints = [];
     let dpsLength = 0;
     this.map = L.map('map').setView([this.latitude, this.longitude], this.mapViewNumber);
+    this.firstpolyline = new L.Polyline(this.pointList, {
+      color: 'blue',
+      weight: 5,
+      opacity: 0.5,
+      smoothFactor: 1
+    });
+    this.firstpolyline.addTo(this.map);
     this.myIcon = L.icon({
       iconUrl: 'assets/images/cars.svg',
       iconSize: [58, 76],
@@ -311,6 +322,18 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
   }
 
   ngAfterViewInit(): void {
+
+    // Logic For Live Data 
+    // Observable
+    //   .interval(this.mapInterval)
+    //   .flatMap(() => this.db.list("/livePosition").valueChanges())
+    //   .subscribe(data => {
+    //       // Logic For Live Data
+    //   });
+
+
+
+
     for (let index = 0; index < this.charts.length; index++) {
       let tempArray = [];
       for (let index2 = 0; index2 < this.charts[index]["y"].length; index2++) {
@@ -359,7 +382,52 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
       });
     }
     Observable
-      .interval(1000)
+      .interval(this.mapInterval)
+      .flatMap(() => this.db.list("/livePosition").valueChanges())
+      .subscribe(data => {
+        if (this.threadLock) {
+          if (this.appSettingsService.currentTimer <= (data[data.length - 1]["Time"] * 10)) {
+            let factor = 1;
+            let unitHeader = "";
+            let tempdata = data.filter(x => x["Time"] * 10 === this.appSettingsService.currentTimer)[0];
+
+            this.marker.setLatLng([tempdata["Latitude"], tempdata["Longitude"]], { icon: this.myIcon });
+            let pointA = new L.LatLng(tempdata["Latitude"], tempdata["Longitude"]);
+            this.pointList.push(pointA);
+            this.firstpolyline = new L.Polyline(this.pointList, {
+              color: 'blue',
+              weight: 5,
+              opacity: 0.5,
+              smoothFactor: 1
+            });
+            this.firstpolyline.addTo(this.map);
+            if (this.flag) {
+              this.map.setView([tempdata["Latitude"], tempdata["Longitude"]], this.mapViewNumber);
+              this.flag = false;
+            }
+            this.appSettingsService.currentTimer += 1;
+
+          }
+          else {
+            this.pointList = [];
+            for (let i in this.map._layers) {
+              if (this.map._layers[i]._path != undefined) {
+                try {
+                  console.log(this.map._layers[i]);
+                  this.map.removeLayer(this.map._layers[i]);
+                }
+                catch (e) {
+                  console.log("problem with " + e + this.map._layers[i]);
+                }
+              }
+            }
+            this.appSettingsService.currentTimer = 4;
+          }
+
+        }
+      });
+    Observable
+      .interval(this.graphandImageInterval)
       .flatMap(() => this.db.list("/livePosition").valueChanges())
       .subscribe(data => {
         if (this.threadLock) {
@@ -370,12 +438,6 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
             let tempdata = data.filter(x => x["Time"] * 10 === this.appSettingsService.currentTimer)[0];
             this.imgid = tempdata["Video"];
             this.fullurl = "https://firebasestorage.googleapis.com/v0/b/mobilitydb-5e890.appspot.com/o/" + this.imgid + ".jpeg?alt=media&token=65f811f4-221c-4d2c-b70c-b1cb6f726a43";
-            this.marker.setLatLng([tempdata["Latitude"], tempdata["Longitude"]], { icon: this.myIcon });
-
-            if (this.flag) {
-              this.map.setView([tempdata["Latitude"], tempdata["Longitude"]], this.mapViewNumber);
-              this.flag = false;
-            }
             for (let index = 0; index < this.charts.length; index++) {
               let unitOB = this.units.filter(x => this.charts[index]["ChartHeader"].includes(x.type))[0].units.filter(y => y.status == true)[0];
               unitHeader = unitOB.name;
@@ -403,9 +465,9 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
                 let tempNo = tempdata[this.charts[index]["ChartCollection"][index3]] * factor;
                 this.charts[index]["y"][index3][tempString].push(tempNo);
                 let tempP = {
-                  "Parameter":"",
-                  "Value":"",
-                  "Unit":""
+                  "Parameter": "",
+                  "Value": "",
+                  "Unit": ""
                 };
                 tempP.Parameter = this.charts[index]["ChartCollection"][index3];
                 tempP.Unit = unitOB.name;
@@ -417,12 +479,12 @@ export class HtcAnalyticsComponent implements OnInit, AfterViewInit, AfterViewCh
               this.charts[index]["ChartObj"].chart.update();
             }
             this.appSettingsService.currentTimer += 1;
-            
+
           }
           else {
             this.appSettingsService.currentTimer = 4;
           }
-          
+
         }
       });
   }
