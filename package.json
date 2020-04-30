@@ -32,7 +32,7 @@
         "d3": "^5.7.0",
         "firebase": "^7.1.0",
         "gh-pages": "^2.1.1",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "moment": "^2.23.0",
         "ng2-charts": "^1.6.0",
         "ng2-odometer": "^1.1.3",
