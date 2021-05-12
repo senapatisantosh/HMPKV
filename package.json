@@ -27,7 +27,7 @@
         "angularx-social-login": "^1.2.5",
         "bootstrap": "^4.2.1",
         "canvasjs": "^1.8.1",
-        "chart.js": "^2.8.0",
+        "chart.js": "^2.9.4",
         "core-js": "^2.5.4",
         "d3": "^5.7.0",
         "firebase": "^7.1.0",
